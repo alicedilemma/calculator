@@ -14,7 +14,10 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
 
     // if the button is a number or . then add it to the temp string
     if (!isNaN(buttonVal) || buttonVal === '.') {
-        console.log('number or decimal');
+        // only allow one decimal point per number
+        if (buttonVal === '.' && temp.includes('.')) {
+            return;
+        }
         temp += buttonVal;
         console.log(temp);
         // display the temp string on the calculator
@@ -79,14 +82,14 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
     // if it's the CE button then clear the latest entry (stored in temp) and clear the display
     if (buttonVal === 'CE') {
         temp = '';
-        document.querySelector('#display').innerHTML = '';
+        document.querySelector('#display').innerHTML = temp;
     }
 
     // if it's the AC button then clear everything
     if (buttonVal === 'AC') {
         temp = '';
         toCalculate = [];
-        document.querySelector('#display').innerHTML = '';
+        document.querySelector('#display').innerHTML = temp;
     }
 
 });
