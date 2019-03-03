@@ -5,7 +5,9 @@ let toCalculate = [];
 // create a variable to store the total - number
 let total = 0;
 // create a temp variable - string
-let temp = '';
+let temp = '0';
+
+document.querySelector('#display').innerHTML = temp;
 
 ////// When a button is clicked, check the value of that button:
 document.querySelector('#buttons').addEventListener('click', function (event) {
@@ -13,7 +15,12 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
 
     // if the button is a number then add it to the temp string
     if (!isNaN(buttonVal)) {
-        temp += buttonVal;
+
+        if (temp === '0') {
+            temp = buttonVal;
+        } else {
+            temp += buttonVal;
+        }
         // display the temp string on the calculator
         document.querySelector('#display').innerHTML = temp;
     }
@@ -37,7 +44,7 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
     if (buttonVal === '+' || buttonVal === '-' || buttonVal === 'x' || buttonVal === '÷') {
         
         // check if a number has been added
-        if (temp === '') {
+        if (temp === '0') {
             //check whether the last thing added was another operator
             let lastThingAdded = toCalculate[toCalculate.length - 1];
             //console.log('The last thing added was', lastThingAdded);
@@ -50,7 +57,7 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
 
         toCalculate.push(temp);
         toCalculate.push(buttonVal);
-        temp = '';
+        temp = '0';
     }
 
     // if it's the equals button then add the last entry (temp) to the array
@@ -84,15 +91,15 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
         // update the displayed value with the answer, clear the array and temp
         document.querySelector('#display').innerHTML = total;
         toCalculate = [];
-        temp = '';
+        temp = '0';
     }
 
     // if it's the +/- button then toggle making the number negative
     if (buttonVal === '+/-') {
-        if (temp === '') {
-            temp += '-';
+        if (temp === '0') {
+            temp = '-';
         } else if (temp === '-') {
-            temp = '';
+            temp = '0';
         } else {
             temp *= -1;
         }
@@ -101,13 +108,13 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
 
     // if it's the CE button then clear the latest entry (stored in temp) and clear the display
     if (buttonVal === 'CE') {
-        temp = '';
+        temp = '0';
         document.querySelector('#display').innerHTML = temp;
     }
 
     // if it's the AC button then clear everything
     if (buttonVal === 'AC') {
-        temp = '';
+        temp = '0';
         toCalculate = [];
         document.querySelector('#display').innerHTML = temp;
     }
