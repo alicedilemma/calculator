@@ -21,27 +21,11 @@ document.querySelector('#buttons').addEventListener('click', function(event) {
         document.querySelector('#display').innerHTML = temp;
     }
 
-    // if it's + or - then add the last value (temp)
-    // and + or - (depending on what is clicked) to the array and clear temp
-    if (buttonVal === '+' || buttonVal === '-') {
+    // if it's an operator then add the last value (temp)
+    // and the operator clicked to the array and clear temp
+    if (buttonVal === '+' || buttonVal === '-' || buttonVal === 'x' || buttonVal === '÷') {
         toCalculate.push(temp);
         toCalculate.push(buttonVal);
-        console.log(toCalculate,temp)
-        temp = '';
-    }
-
-    // if it's the x button then add the last entry (temp) and * to the array, clear temp
-    if (buttonVal === 'x') {
-        toCalculate.push(temp);
-        toCalculate.push('*');
-        console.log(toCalculate,temp)
-        temp = '';
-    }
-
-    // if it's the % button then add the last entry (temp) and / to the array, clear temp
-    if (buttonVal === '÷') {
-        toCalculate.push(temp);
-        toCalculate.push('/');
         console.log(toCalculate,temp)
         temp = '';
     }
@@ -53,29 +37,29 @@ document.querySelector('#buttons').addEventListener('click', function(event) {
         console.log('Calculating:',toCalculate);
         
         // get the first number from the array
-        number = Number(toCalculate[0]);
+        total = Number(toCalculate[0]);
 
         // loop through the array to get the next symbol and number
         for (let i = 1; i < toCalculate.length; i += 2) {
-            debugger;
             let operator = toCalculate[i];
             let nextNumber = Number(toCalculate[i + 1]);
             
             // perform approprite calculation
             if (operator === '+') {
-                number += nextNumber;
+                total += nextNumber;
             } else if (operator === '-') {
-                number -= nextNumber;
-            } else if (operator === '*') {
-                number *= nextNumber;
-            } else if (operator === '/') {
-                number /= nextNumber;
+                total -= nextNumber;
+            } else if (operator === 'x') {
+                total *= nextNumber;
+            } else if (operator === '÷') {
+                total /= nextNumber;
             }
             // continue until everything in the array has been calculated
         }
+
         
         // update the displayed value with the answer, clear the array and temp
-        document.querySelector('#display').innerHTML = number;
+        document.querySelector('#display').innerHTML = total;
         toCalculate = [];
         temp = '';
     }
