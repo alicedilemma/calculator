@@ -12,15 +12,24 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
     console.log(event.target.innerHTML);
     buttonVal = event.target.innerHTML;
 
-    // if the button is a number or . then add it to the temp string
-    if (!isNaN(buttonVal) || buttonVal === '.') {
+    // if the button is a number then add it to the temp string
+    if (!isNaN(buttonVal)) {
+        temp += buttonVal;
+        // display the temp string on the calculator
+        document.querySelector('#display').innerHTML = temp;
+    }
+
+    //if the button is a . then add it to the temp string
+    if (buttonVal === '.') {
         // only allow one decimal point per number
-        if (buttonVal === '.' && temp.includes('.')) {
+        if (temp.includes('.')) {
             return;
         }
+        // add a zero if there's no number before the decimal point
+        if (temp === '' || temp === '-') {
+            temp += '0';
+        }
         temp += buttonVal;
-        console.log(temp);
-        // display the temp string on the calculator
         document.querySelector('#display').innerHTML = temp;
     }
 
