@@ -9,7 +9,6 @@ let temp = '';
 
 ////// When a button is clicked, check the value of that button:
 document.querySelector('#buttons').addEventListener('click', function (event) {
-    console.log(event.target.innerHTML);
     buttonVal = event.target.innerHTML;
 
     // if the button is a number then add it to the temp string
@@ -36,9 +35,21 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
     // if it's an operator then add the last value (temp)
     // and the operator clicked to the array and clear temp
     if (buttonVal === '+' || buttonVal === '-' || buttonVal === 'x' || buttonVal === '÷') {
+        
+        // check if a number has been added
+        if (temp === '') {
+            //check whether the last thing added was another operator
+            let lastThingAdded = toCalculate[toCalculate.length - 1];
+            //console.log('The last thing added was', lastThingAdded);
+            if (isNaN(lastThingAdded)) {
+                // if it was, replace with the new operator
+                toCalculate[toCalculate.length - 1] = buttonVal;
+            }
+            return;
+        }
+
         toCalculate.push(temp);
         toCalculate.push(buttonVal);
-        console.log(toCalculate, temp)
         temp = '';
     }
 
