@@ -8,12 +8,12 @@ let total = 0;
 let temp = '';
 
 ////// When a button is clicked, check the value of that button:
-document.querySelector('#buttons').addEventListener('click', function(event) {
+document.querySelector('#buttons').addEventListener('click', function (event) {
     console.log(event.target.innerHTML);
     buttonVal = event.target.innerHTML;
 
     // if the button is a number or . then add it to the temp string
-    if ( !isNaN(buttonVal) || buttonVal === '.') {
+    if (!isNaN(buttonVal) || buttonVal === '.') {
         console.log('number or decimal');
         temp += buttonVal;
         console.log(temp);
@@ -26,7 +26,7 @@ document.querySelector('#buttons').addEventListener('click', function(event) {
     if (buttonVal === '+' || buttonVal === '-' || buttonVal === 'x' || buttonVal === '÷') {
         toCalculate.push(temp);
         toCalculate.push(buttonVal);
-        console.log(toCalculate,temp)
+        console.log(toCalculate, temp)
         temp = '';
     }
 
@@ -34,8 +34,8 @@ document.querySelector('#buttons').addEventListener('click', function(event) {
     if (buttonVal === '=') {
         toCalculate.push(temp);
         // then perform the calculation stored in the array:
-        console.log('Calculating:',toCalculate);
-        
+        console.log('Calculating:', toCalculate);
+
         // get the first number from the array
         total = Number(toCalculate[0]);
 
@@ -43,7 +43,7 @@ document.querySelector('#buttons').addEventListener('click', function(event) {
         for (let i = 1; i < toCalculate.length; i += 2) {
             let operator = toCalculate[i];
             let nextNumber = Number(toCalculate[i + 1]);
-            
+
             // perform approprite calculation
             if (operator === '+') {
                 total += nextNumber;
@@ -57,11 +57,23 @@ document.querySelector('#buttons').addEventListener('click', function(event) {
             // continue until everything in the array has been calculated
         }
 
-        
+
         // update the displayed value with the answer, clear the array and temp
         document.querySelector('#display').innerHTML = total;
         toCalculate = [];
         temp = '';
+    }
+
+    // if it's the +/- button then toggle making the number negative
+    if (buttonVal === '+/-') {
+        if (temp === '') {
+            temp += '-';
+        } else if (temp === '-') {
+            temp = '';
+        } else {
+            temp *= -1;
+        }
+        document.querySelector('#display').innerHTML = temp;
     }
 
     // if it's the CE button then clear the latest entry (stored in temp) and clear the display
@@ -83,9 +95,9 @@ document.querySelector('#buttons').addEventListener('click', function(event) {
 
 
 
-    
 
-  
+
+
 
 
 

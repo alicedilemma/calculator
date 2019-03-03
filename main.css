@@ -4,6 +4,10 @@
     grid-template-columns: auto 260px auto;
 }
 
+.small-text {
+    font-size: 1.5em;
+}
+
 #display {
     font-family: monospace;
     color: #404040;
@@ -13,7 +17,6 @@
     margin: 15px 5px 0px 5px;
     background-color: yellow;
     height: 50px;
-
 }
 
 #buttons {
