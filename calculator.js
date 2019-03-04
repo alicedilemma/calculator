@@ -23,6 +23,7 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
         }
         // display the temp string on the calculator
         document.querySelector('#display').innerHTML = temp;
+        total = 0;
     }
 
     //if the button is a . then add it to the temp string
@@ -37,6 +38,7 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
         }
         temp += buttonVal;
         document.querySelector('#display').innerHTML = temp;
+        total = 0;
     }
 
     // if it's an operator then add the last value (temp)
@@ -52,6 +54,14 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
                 // if it was, replace with the new operator
                 toCalculate[toCalculate.length - 1] = buttonVal;
             }
+
+            //check if there's an old total to work from
+            if (total !== 0) {
+                toCalculate.push(total);
+                toCalculate.push(buttonVal);
+                total = 0;
+            }
+
             return;
         }
 
