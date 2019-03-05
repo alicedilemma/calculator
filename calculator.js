@@ -7,7 +7,7 @@ let total = 0;
 // create a temp variable - string
 let temp = '0';
 
-document.querySelector('#display').innerHTML = temp;
+updateDisplay(temp);
 
 ////// When a button is clicked, check the value of that button:
 document.querySelector('#buttons').addEventListener('click', function (event) {
@@ -18,26 +18,30 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
 
         if (temp === '0') {
             temp = buttonVal;
-        } else {
+        } else if (canBeDisplayed(temp)) {
             temp += buttonVal;
         }
         // display the temp string on the calculator
-        document.querySelector('#display').innerHTML = temp;
+        updateDisplay(temp);
+        
+        // discard old total
         total = 0;
     }
 
     //if the button is a . then add it to the temp string
     if (buttonVal === '.') {
         // only allow one decimal point per number
-        if (temp.includes('.')) {
+        if (temp.includes('.') || !canBeDisplayed(temp)) {
             return;
         }
         // add a zero if there's no number before the decimal point
-        if (temp === '' || temp === '-') {
+        if (temp === '-') {
             temp += '0';
         }
         temp += buttonVal;
-        document.querySelector('#display').innerHTML = temp;
+        updateDisplay(temp);
+
+        // discard old total
         total = 0;
     }
 
@@ -101,7 +105,7 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
         total = round(total, 4);
 
         // update the displayed value with the answer, clear the array and temp
-        document.querySelector('#display').innerHTML = total;
+        updateDisplay(total);
 
         toCalculate = [];
         temp = '0';
@@ -116,20 +120,20 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
         } else {
             temp *= -1;
         }
-        document.querySelector('#display').innerHTML = temp;
+        updateDisplay(temp);
     }
 
     // if it's the CE button then clear the latest entry (stored in temp) and clear the display
     if (buttonVal === 'CE') {
         temp = '0';
-        document.querySelector('#display').innerHTML = temp;
+        updateDisplay(temp);
     }
 
     // if it's the AC button then clear everything
     if (buttonVal === 'AC') {
         temp = '0';
         toCalculate = [];
-        document.querySelector('#display').innerHTML = temp;
+        updateDisplay(temp);
     }
 
 });
@@ -137,16 +141,15 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
 // function to round results
 function round(value, decimals) {
     return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
-  }
+}
 
+function canBeDisplayed(content) {
+    return (content.length < 10 ? true : false);
+}
 
-
-
-
-
-
-
-
+function updateDisplay(content) {
+    document.querySelector('#display').innerHTML = content;
+}
 
 
 
