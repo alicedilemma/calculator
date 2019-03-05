@@ -97,9 +97,12 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
             // continue until everything in the array has been calculated
         }
 
+        // round total for display
+        total = round(total, 4);
 
         // update the displayed value with the answer, clear the array and temp
         document.querySelector('#display').innerHTML = total;
+
         toCalculate = [];
         temp = '0';
     }
@@ -130,6 +133,11 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
     }
 
 });
+
+// function to round results
+function round(value, decimals) {
+    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+  }
 
 
 
