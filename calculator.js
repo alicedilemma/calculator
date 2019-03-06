@@ -1,13 +1,10 @@
-////// Initialise variables:
-// create an empty array to store numbers and operations to be performed when someone hits =
-let toCalculate = [];
-// create a variable to store the total - number
-let total = 0;
-// create a numberString variable - string
-let numberString = '0';
+//// initialise variables ////
+
+let toCalculate = []; // to store numbers and operators to calculate
+let total = 0; // result of calculation
+let numberString = '0'; // string to store numbers as they're created
 
 updateDisplay(numberString);
-
 
 
 
@@ -24,6 +21,9 @@ function canBeDisplayed(content) {
     return (content.length <= 10 ? true : false);
 }
 
+function round(value, decimals) {
+    return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
+}
 
 
 
@@ -72,10 +72,10 @@ function addOperator(operator) {
             toCalculate.push(operator);
             total = 0;
             return;
-        // check if there's nothing to calculate
+            // check if there's nothing to calculate
         } else if (toCalculate.length === 0) {
             return;
-        //check if the last thing added was another operator
+            //check if the last thing added was another operator
         } else {
             const lastThingAdded = toCalculate[toCalculate.length - 1];
             //console.log('The last thing added was ', lastThingAdded);
@@ -91,10 +91,64 @@ function addOperator(operator) {
     numberString = '0';
 }
 
-    
+function clearAll() {
+    numberString = '0';
+    total = 0;
+    toCalculate = [];
+    updateDisplay(numberString);
+}
+
+function clearEntry() {
+    numberString = '0';
+    total = 0;
+    updateDisplay(numberString);
+}
+
+function equals() {
+    toCalculate.push(numberString);
+    console.log('Calculating:', toCalculate);
+    total = Number(toCalculate[0]);
+    for (let i = 1; i < toCalculate.length; i += 2) {
+        let operator = toCalculate[i];
+        let nextNumber = Number(toCalculate[i + 1]);
+        // perform approprite calculation
+        if (operator === '+') {
+            total += nextNumber;
+        } else if (operator === '-') {
+            total -= nextNumber;
+        } else if (operator === '*') {
+            total *= nextNumber;
+        } else if (operator === '/') {
+            total /= nextNumber;
+        }
+    }
+    // round total for display
+    total = round(total, 4);
+    // if answer is too large to display change to an exponential
+    if (!canBeDisplayed(total.toString())) {
+        total = total.toExponential(4);
+    }
+    updateDisplay(total);
+    toCalculate = [];
+    numberString = '0';
+}
+
+function toggleNegative() {
+    if (numberString === '0') {
+        numberString = '-';
+    } else if (numberString === '-') {
+        numberString = '0';
+    } else if (numberString[0] === '-') {
+        numberString = numberString.slice(1, numberString.length);
+    } else {
+        numberString = '-' + numberString;
+    }
+    updateDisplay(numberString);
+}
 
 
 
+//// button object ////
 
 const buttonActions = {
     // numbers
@@ -113,108 +167,22 @@ const buttonActions = {
     add: { action: addOperator, value: '+' },
     subtract: { action: addOperator, value: '-' },
     multiply: { action: addOperator, value: '*' },
-    divide: { action: addOperator, value: '/' }
+    divide: { action: addOperator, value: '/' },
+    // equals
+    equals: { action: equals },
+    clear: { action: clearAll },
+    'clear-entry': { action: clearEntry },
+    negative: { action: toggleNegative }
 }
 
 
+
 //// when a button is clicked ////
+
 document.querySelector('#buttons').addEventListener('click', function (event) {
     buttonId = event.target.id;
     //console.log(buttonId);
-
     const functionToCall = buttonActions[buttonId].action;
     const value = buttonActions[buttonId].value;
     functionToCall(value);
 });
-
-
-
-/*
-
-
-
-
-    // if it's the equals button then add the last entry (numberString) to the array
-    if (buttonVal === '=') {
-        toCalculate.push(numberString);
-        // then perform the calculation stored in the array:
-        console.log('Calculating:', toCalculate);
-
-        // get the first number from the array
-        total = Number(toCalculate[0]);
-
-        // loop through the array to get the next symbol and number
-        for (let i = 1; i < toCalculate.length; i += 2) {
-            let operator = toCalculate[i];
-            let nextNumber = Number(toCalculate[i + 1]);
-
-            // perform approprite calculation
-            if (operator === '+') {
-                total += nextNumber;
-            } else if (operator === '-') {
-                total -= nextNumber;
-            } else if (operator === 'x') {
-                total *= nextNumber;
-            } else if (operator === '÷') {
-                total /= nextNumber;
-            }
-            // continue until everything in the array has been calculated
-        }
-
-        // round total for display
-        total = round(total, 4);
-
-        //  if answer is too large to display change to exponential
-        if (!canBeDisplayed(total.toString())) {
-            total = total.toExponential(4);
-        }
-
-        // update the displayed value with the answer,
-        updateDisplay(total);
-
-        // clear the array and numberString
-        toCalculate = [];
-        numberString = '0';
-    }
-
-    // if it's the +/- button then toggle making the number negative
-    if (buttonVal === '+/-') {
-        if (numberString === '0') {
-            numberString = '-';
-        } else if (numberString === '-') {
-            numberString = '0';
-        } else if (numberString[0] === '-') {
-            numberString = numberString.slice(1, numberString.length);
-        } else {
-            numberString = '-' + numberString;
-        }
-        updateDisplay(numberString);
-    }
-
-    // if it's the CE button then clear the latest entry (stored in numberString) and clear the display
-    if (buttonVal === 'CE') {
-        numberString = '0';
-        total = 0;
-        updateDisplay(numberString);
-    }
-
-    // if it's the AC button then clear everything
-    if (buttonVal === 'AC') {
-        total = 0;
-        numberString = '0';
-        toCalculate = [];
-        updateDisplay(numberString);
-    }
-
-});
-
-// function to round results
-function round(value, decimals) {
-    return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
-}
-
-
-
-
-
-*/
