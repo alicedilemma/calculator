@@ -1,5 +1,4 @@
 ////// Initialise variables:
-
 // create an empty array to store numbers and operations to be performed when someone hits =
 let toCalculate = [];
 // create a variable to store the total - number
@@ -18,8 +17,12 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
 
         if (temp === '0') {
             temp = buttonVal;
-        } else if (canBeDisplayed(temp)) {
+        } else {
             temp += buttonVal;
+        }
+
+        if (!canBeDisplayed(temp)) {
+            temp = temp.slice(0, temp.length-1);
         }
         // display the temp string on the calculator
         updateDisplay(temp);
@@ -104,9 +107,15 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
         // round total for display
         total = round(total, 4);
 
-        // update the displayed value with the answer, clear the array and temp
+        //  if answer is too large to display change to exponential
+        if (!canBeDisplayed(total.toString())) {
+            total = total.toExponential(4);
+        }
+
+        // update the displayed value with the answer,
         updateDisplay(total);
 
+        // clear the array and temp
         toCalculate = [];
         temp = '0';
     }
@@ -144,13 +153,14 @@ function round(value, decimals) {
 }
 
 function canBeDisplayed(content) {
-    return (content.length < 10 ? true : false);
+    if (content[0] === '-') {
+        return (content.length <= 11 ? true : false);
+    }
+    return (content.length <= 10 ? true : false);
 }
 
 function updateDisplay(content) {
     document.querySelector('#display').innerHTML = content;
 }
-
-
 
 
