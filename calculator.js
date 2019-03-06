@@ -34,7 +34,7 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
     //if the button is a . then add it to the temp string
     if (buttonVal === '.') {
         // only allow one decimal point per number
-        if (temp.includes('.') || !canBeDisplayed(temp)) {
+        if (temp.includes('.')) {
             return;
         }
         // add a zero if there's no number before the decimal point
@@ -42,6 +42,10 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
             temp += '0';
         }
         temp += buttonVal;
+        
+        if (!canBeDisplayed(temp)) {
+            temp = temp.slice(0, temp.length-1);
+        }
         updateDisplay(temp);
 
         // discard old total
@@ -126,8 +130,10 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
             temp = '-';
         } else if (temp === '-') {
             temp = '0';
+        } else if (temp[0] === '-') {
+            temp = temp.slice(1, temp.length);
         } else {
-            temp *= -1;
+            temp = '-' + temp; 
         }
         updateDisplay(temp);
     }
