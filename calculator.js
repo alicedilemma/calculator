@@ -106,22 +106,8 @@ function clearEntry() {
 
 function equals() {
     toCalculate.push(numberString);
-    console.log('Calculating:', toCalculate);
-    total = Number(toCalculate[0]);
-    for (let i = 1; i < toCalculate.length; i += 2) {
-        let operator = toCalculate[i];
-        let nextNumber = Number(toCalculate[i + 1]);
-        // perform approprite calculation
-        if (operator === '+') {
-            total += nextNumber;
-        } else if (operator === '-') {
-            total -= nextNumber;
-        } else if (operator === '*') {
-            total *= nextNumber;
-        } else if (operator === '/') {
-            total /= nextNumber;
-        }
-    }
+    console.log('Calculating:', toCalculate.join(' '));
+    total = eval(toCalculate.join(''));
     // round total for display
     total = round(total, 4);
     // if answer is too large to display change to an exponential
