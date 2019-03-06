@@ -8,9 +8,15 @@ let temp = '0';
 
 updateDisplay(temp);
 
+
+function whichButtonClicked(event) {
+    return event.target.innerHTML;
+}
+
+
 ////// When a button is clicked, check the value of that button:
 document.querySelector('#buttons').addEventListener('click', function (event) {
-    buttonVal = event.target.innerHTML;
+    buttonVal = whichButtonClicked(event);
 
     // if the button is a number then add it to the temp string
     if (!isNaN(buttonVal)) {
@@ -22,11 +28,11 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
         }
 
         if (!canBeDisplayed(temp)) {
-            temp = temp.slice(0, temp.length-1);
+            temp = temp.slice(0, temp.length - 1);
         }
         // display the temp string on the calculator
         updateDisplay(temp);
-        
+
         // discard old total
         total = 0;
     }
@@ -42,9 +48,9 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
             temp += '0';
         }
         temp += buttonVal;
-        
+
         if (!canBeDisplayed(temp)) {
-            temp = temp.slice(0, temp.length-1);
+            temp = temp.slice(0, temp.length - 1);
         }
         updateDisplay(temp);
 
@@ -55,25 +61,27 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
     // if it's an operator then add the last value (temp)
     // and the operator clicked to the array and clear temp
     if (buttonVal === '+' || buttonVal === '-' || buttonVal === 'x' || buttonVal === '÷') {
-        
+
         // check if a number has been added
         if (temp === '0') {
-            //check whether the last thing added was another operator
-            let lastThingAdded = toCalculate[toCalculate.length - 1];
-            //console.log('The last thing added was', lastThingAdded);
-            if (isNaN(lastThingAdded)) {
-                // if it was, replace with the new operator
-                toCalculate[toCalculate.length - 1] = buttonVal;
-            }
-
             //check if there's an old total to work from
             if (total !== 0) {
                 toCalculate.push(total);
                 toCalculate.push(buttonVal);
                 total = 0;
+                return;
+            } else if (toCalculate.length === 0) {
+                return;
+            } else {
+                //check whether the last thing added was another operator
+                let lastThingAdded = toCalculate[toCalculate.length - 1];
+                //console.log('The last thing added was', lastThingAdded);
+                if (isNaN(lastThingAdded)) {
+                    // if it was, replace with the new operator
+                    toCalculate[toCalculate.length - 1] = buttonVal;
+                }
+                return;
             }
-
-            return;
         }
 
         toCalculate.push(temp);
@@ -133,7 +141,7 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
         } else if (temp[0] === '-') {
             temp = temp.slice(1, temp.length);
         } else {
-            temp = '-' + temp; 
+            temp = '-' + temp;
         }
         updateDisplay(temp);
     }
@@ -141,11 +149,13 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
     // if it's the CE button then clear the latest entry (stored in temp) and clear the display
     if (buttonVal === 'CE') {
         temp = '0';
+        total = 0;
         updateDisplay(temp);
     }
 
     // if it's the AC button then clear everything
     if (buttonVal === 'AC') {
+        total = 0;
         temp = '0';
         toCalculate = [];
         updateDisplay(temp);
@@ -155,7 +165,7 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
 
 // function to round results
 function round(value, decimals) {
-    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+    return Number(Math.round(value + 'e' + decimals) + 'e-' + decimals);
 }
 
 function canBeDisplayed(content) {
@@ -168,5 +178,4 @@ function canBeDisplayed(content) {
 function updateDisplay(content) {
     document.querySelector('#display').innerHTML = content;
 }
-
 
