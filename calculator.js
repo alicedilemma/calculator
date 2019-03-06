@@ -63,10 +63,41 @@ function addDecimal(decimal) {
     total = 0;
 }
 
+function addOperator(operator) {
+    // check if a new number has been added
+    if (numberString === '0') {
+        // check if there's a previous total to work from
+        if (total !== 0) {
+            toCalculate.push(total);
+            toCalculate.push(operator);
+            total = 0;
+            return;
+        // check if there's nothing to calculate
+        } else if (toCalculate.length === 0) {
+            return;
+        //check if the last thing added was another operator
+        } else {
+            const lastThingAdded = toCalculate[toCalculate.length - 1];
+            //console.log('The last thing added was ', lastThingAdded);
+            if (isNaN(lastThingAdded)) {
+                // if it was an operator, replace with the new operator
+                toCalculate[toCalculate.length - 1] = operator;
+            }
+            return;
+        }
+    }
+    toCalculate.push(numberString);
+    toCalculate.push(operator);
+    numberString = '0';
+}
+
+    
+
 
 
 
 const buttonActions = {
+    // numbers
     zero: { action: addNumber, value: '0' },
     one: { action: addNumber, value: '1' },
     two: { action: addNumber, value: '2' },
@@ -78,22 +109,18 @@ const buttonActions = {
     eight: { action: addNumber, value: '8' },
     nine: { action: addNumber, value: '9' },
     decimal: { action: addDecimal, value: '.' },
+    // operators
+    add: { action: addOperator, value: '+' },
+    subtract: { action: addOperator, value: '-' },
+    multiply: { action: addOperator, value: '*' },
+    divide: { action: addOperator, value: '/' }
 }
 
 
-
-
-
-
-
-
-
-
-////// When a button is clicked, check the value of that button:
+//// when a button is clicked ////
 document.querySelector('#buttons').addEventListener('click', function (event) {
-
     buttonId = event.target.id;
-    console.log(buttonId);
+    //console.log(buttonId);
 
     const functionToCall = buttonActions[buttonId].action;
     const value = buttonActions[buttonId].value;
@@ -106,36 +133,6 @@ document.querySelector('#buttons').addEventListener('click', function (event) {
 
 
 
-    // if it's an operator then add the last value (numberString)
-    // and the operator clicked to the array and clear numberString
-    if (buttonVal === '+' || buttonVal === '-' || buttonVal === 'x' || buttonVal === '÷') {
-
-        // check if a number has been added
-        if (numberString === '0') {
-            //check if there's an old total to work from
-            if (total !== 0) {
-                toCalculate.push(total);
-                toCalculate.push(buttonVal);
-                total = 0;
-                return;
-            } else if (toCalculate.length === 0) {
-                return;
-            } else {
-                //check whether the last thing added was another operator
-                let lastThingAdded = toCalculate[toCalculate.length - 1];
-                //console.log('The last thing added was', lastThingAdded);
-                if (isNaN(lastThingAdded)) {
-                    // if it was, replace with the new operator
-                    toCalculate[toCalculate.length - 1] = buttonVal;
-                }
-                return;
-            }
-        }
-
-        toCalculate.push(numberString);
-        toCalculate.push(buttonVal);
-        numberString = '0';
-    }
 
     // if it's the equals button then add the last entry (numberString) to the array
     if (buttonVal === '=') {
