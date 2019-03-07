@@ -5,37 +5,40 @@
   <title>Calculator</title>
   <meta charset="UTF-8">
   <link href="/main.css" rel="stylesheet" type="text/css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
     <div class="grid-container">
-        <div id="display">
-        </div>
-        <div id="buttons">
-            <button class="calc-button small-text" id="negative">+/-</button>
-            <button class="calc-button"></button>
-            <button class="calc-button" id="clear">AC</button>
-            <button class="calc-button" id="clear-entry">CE</button>
-            <button class="calc-button" id="seven">7</button>
-            <button class="calc-button" id="eight">8</button>
-            <button class="calc-button" id="nine">9</button>
-            <button class="calc-button" id="divide">÷</button>
-            <button class="calc-button" id="four">4</button>
-            <button class="calc-button" id="five">5</button>
-            <button class="calc-button" id="six">6</button>
-            <button class="calc-button" id="multiply">x</button>   
-            <button class="calc-button" id="one">1</button>
-            <button class="calc-button" id="two">2</button>
-            <button class="calc-button" id="three">3</button>
-            <button class="calc-button" id="subtract">-</button>
-            <button class="calc-button" id="zero">0</button>
-            <button class="calc-button" id="decimal">.</button>
-            <button class="calc-button" id="equals">=</button>
-            <button class="calc-button" id="add">+</button>
-        </div>
-        
-    </div>
 
+        <div id="calculator">
+            <div id="display">
+            </div>
+            <div id="buttons">
+                <button class="calc-button small-text dark-grey" id="off" title="Save your battery">OFF</button>
+                <button class="calc-button medium-text light-grey" id="clear">AC</button>
+                <button class="calc-button medium-text light-grey" id="clear-entry">CE</button>
+                <button class="calc-button medium-text light-grey" id="negative">+/-</button>
+                <button class="calc-button" id="seven">7</button>
+                <button class="calc-button" id="eight">8</button>
+                <button class="calc-button" id="nine">9</button>
+                <button class="calc-button grey" id="divide">÷</button>
+                <button class="calc-button" id="four">4</button>
+                <button class="calc-button" id="five">5</button>
+                <button class="calc-button" id="six">6</button>
+                <button class="calc-button grey" id="multiply">x</button>   
+                <button class="calc-button" id="one">1</button>
+                <button class="calc-button" id="two">2</button>
+                <button class="calc-button" id="three">3</button>
+                <button class="calc-button grey" id="subtract">-</button>
+                <button class="calc-button" id="zero">0</button>
+                <button class="calc-button" id="decimal">.</button>
+                <button class="calc-button" id="equals">=</button>
+                <button class="calc-button grey" id="add">+</button>
+            </div>
+        </div>
+
+    </div>
     <script type="text/javascript" src="/calculator.js"></script>
 </body>
 

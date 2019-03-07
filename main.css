@@ -1,37 +1,75 @@
 .grid-container {
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: auto 260px auto;
+    grid-template-columns: auto 240px auto;
 }
 
 .small-text {
     font-size: 1.5em;
 }
 
-#display {
-    font-family: monospace;
-    color: #404040;
+#calculator {
     grid-column: 2;
+    background-color: #D4AC0D;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 8px 8px 10px #888888;
+}
+
+#display {
+    font-family: "Alarm clock", monospace;
+    color: #404040;
     text-align: right;
     font-size: 2.9em;
-    margin: 15px 5px 0px 5px;
-    background-color: yellow;
-    height: 50px;
+    margin: 25px 10px 20px 10px;
+    background-color: #d4d485;
+    height: 46px;
+    border-radius: 5px;
+    text-transform: uppercase;
 }
 
 #buttons {
-    grid-column: 2;
     display: flex;
     flex-wrap: wrap;
+    margin: 10px;
 }
 
 button {
     text-align: center;
     font-size: 2em;
-    color: white;
+    font-family: sans-serif;
+    color: black;
     flex: 1 0 20%;
-    margin: 5px;
+    margin: 4px;
     height: 40px;
-    background-color: gray;
+    background-color: white;
+    border-radius: 5px;
+    padding: 0;
+    border: none;
+}
+
+.light-grey {
+    background-color: #e0e0e0;
+}
+
+.grey {
+    background-color: #bfbdbd;
+}
+
+.dark-grey {
+    background-color: #A8A8A8
+}
+
+.medium-text {
+    font-size: 1.6em;
+}
+
+.small-text {
+    font-size: 0.9em;
+}
+
+@font-face {
+    font-family: "Alarm clock";
+    src: url(alarm-clock.ttf) format("truetype");
 }
 

@@ -8,7 +8,7 @@ updateDisplay(numberString);
 
 
 
-//// calculator functions ////
+//// general calculator functions ////
 
 function updateDisplay(content) {
     document.querySelector('#display').innerHTML = content;
@@ -16,9 +16,9 @@ function updateDisplay(content) {
 
 function canBeDisplayed(content) {
     if (content[0] === '-') {
-        return (content.length <= 11 ? true : false);
+        return (content.length <= 8 ? true : false);
     }
-    return (content.length <= 10 ? true : false);
+    return (content.length <= 7 ? true : false);
 }
 
 function round(value, decimals) {
@@ -112,7 +112,7 @@ function equals() {
     total = round(total, 4);
     // if answer is too large to display change to an exponential
     if (!canBeDisplayed(total.toString())) {
-        total = total.toExponential(4);
+        total = total.toExponential(1);
     }
     updateDisplay(total);
     toCalculate = [];
@@ -130,6 +130,11 @@ function toggleNegative() {
         numberString = '-' + numberString;
     }
     updateDisplay(numberString);
+}
+
+function turnOff() {
+    clearAll();
+    updateDisplay('');
 }
 
 
@@ -158,7 +163,8 @@ const buttonActions = {
     equals: { action: equals },
     clear: { action: clearAll },
     'clear-entry': { action: clearEntry },
-    negative: { action: toggleNegative }
+    negative: { action: toggleNegative },
+    off: { action: turnOff }
 }
 
 
@@ -168,6 +174,7 @@ const buttonActions = {
 document.querySelector('#buttons').addEventListener('click', function (event) {
     buttonId = event.target.id;
     //console.log(buttonId);
+
     const functionToCall = buttonActions[buttonId].action;
     const value = buttonActions[buttonId].value;
     functionToCall(value);
