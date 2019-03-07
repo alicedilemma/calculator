@@ -44,16 +44,16 @@ function addNumber(number) {
     total = 0;
 }
 
-function addDecimal(decimal) {
+function addDecimal() {
     // only allow one decimal point per number
-    if (numberString.includes(decimal)) {
+    if (numberString.includes('.')) {
         return;
     }
     // add a zero if there's no number before the decimal point
     if (numberString === '-') {
         numberString += '0';
     }
-    numberString += decimal;
+    numberString += '.';
     // don't let numbers get bigger than the display
     if (!canBeDisplayed(numberString)) {
         numberString = numberString.slice(0, numberString.length - 1);
@@ -65,7 +65,7 @@ function addDecimal(decimal) {
 
 function addOperator(operator) {
     // check if a new number has been added
-    if (numberString === '0') {
+    if (numberString === '0' || numberString === '-') {
         // check if there's a previous total to work from
         if (total !== 0) {
             toCalculate.push(total);
@@ -153,7 +153,7 @@ const buttonActions = {
     seven: { action: addNumber, value: '7' },
     eight: { action: addNumber, value: '8' },
     nine: { action: addNumber, value: '9' },
-    decimal: { action: addDecimal, value: '.' },
+    decimal: { action: addDecimal },
     // operators
     add: { action: addOperator, value: '+' },
     subtract: { action: addOperator, value: '-' },
@@ -174,8 +174,10 @@ const buttonActions = {
 document.querySelector('#buttons').addEventListener('click', function (event) {
     buttonId = event.target.id;
     //console.log(buttonId);
-
-    const functionToCall = buttonActions[buttonId].action;
-    const value = buttonActions[buttonId].value;
-    functionToCall(value);
+    const button = buttonActions[buttonId];
+    if (button !== undefined) {
+        const functionToCall = button.action;
+        const value = button.value;
+        functionToCall(value); 
+    }
 });
